@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validator</title>
+    <link rel="stylesheet" href="./css/style.css">
+  </head>
+  <body>
+    <form id="myForm" method="GET">
+      <div>
+        <label for="">Nombre:</label>
+        <input 
+          name="name" 
+          type="text" 
+          class="validator"
+          data-validators="required length">
+      </div>
+      <div>
+        <label for="">Email:</label>
+        <input 
+          name="email" 
+          type="email" 
+          class="validator"
+          data-validators="required">
+      </div>
+      <button type="submit">Enviar</button>
+    </form>  
+    <script src="./js/validator.js"></script>
+    <script>
+      const formValidator = new validator('myForm').init();
+    </script>
+  </body>
+</html>
