@@ -4,31 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Validator</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .error-msg {
+        display: block;
+        color: red;
+      }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
   </head>
-  <body>
-    <form id="myForm" method="GET">
-      <div>
-        <label for="">Nombre:</label>
-        <input 
-          name="name" 
-          type="text" 
-          class="validator"
-          data-validators="required length">
+  <body class="container-sm" style="background-color: #eee;">
+    <form class="myForm" action="/si.js" id="myForm" method="POST">
+      <div class="row">
+        <div class="col-md-6">
+          <label class="form-label">Nombre:</label>
+          <input 
+            name="name" 
+            type="text" 
+            class="validator form-control"
+            data-validators="required length"
+            data-validators_minlength="5"
+            data-validators_maxlength="50">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Username:</label>
+          <input 
+            type="text"
+            name="username"
+            class="validator form-control"
+            data-validators="required alphanumeric length">
+        </div>
       </div>
-      <div>
-        <label for="">Email:</label>
-        <input 
-          name="email" 
-          type="email" 
-          class="validator"
-          data-validators="required">
+      <div class="row">
+        <div class="col-md-4">
+          <label class="form-label">Email:</label>
+          <input 
+            name="email" 
+            type="email" 
+            class="validator form-control"
+            data-validators="required email">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">URL:</label>
+          <input 
+            name="url" 
+            type="url" 
+            class="validator form-control"
+            data-validators="required url">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Edad:</label>
+          <input 
+            type="number"
+            name="age"
+            class="validator form-control"
+            data-validators="required integer">
+        </div>
       </div>
-      <button type="submit">Enviar</button>
+      <button class="button btn btn-primary" type="submit">Enviar</button>
     </form>  
     <script src="./js/validator.js"></script>
     <script>
-      const formValidator = new validator('myForm').init();
+      const formValidator = new validator('myForm').init().setAjax();
     </script>
   </body>
 </html>
