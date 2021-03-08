@@ -14,6 +14,8 @@ class validator {
     integer: `El campo debe ser de tipo entero`,
     alphanumeric: `Solo se permiten letras y numeros sin espacios`,
     url: `El campo debe ser una URL válida`,
+    passwordComplex: `El campo debe tener una letra mayuscula,<br> una letra minuscula, un numero,<br> un caracter especial y debe tener minimo 8 caracteres`,
+    passwordModerate: `El campo debe tener una letra mayuscula,<br> una letra minuscula, un numero y debe tener minimo 8 caracteres`,
   };
 
   constructor(formId) {
@@ -60,7 +62,10 @@ class validator {
         if (this.via == "ajax") {
           e.preventDefault();
           this.submitHandler();
-          this.form.reset();
+          setTimeout(() => {
+            this.form.reset();
+          }, 500);
+          //this.form.reset();
         } else {
         }
       }
@@ -183,7 +188,7 @@ validator.prototype._integer = function (input) {
   let value = input.value;
   let msg = this.msg.integer;
   let pattern = new RegExp(/^[0-9]+$/);
-  if (!pattern.test(value) && value.trim() !== "") {
+  if (!pattern.test(value) && value.trim() != "") {
     this.setError(input, msg);
   }
 };
@@ -191,7 +196,7 @@ validator.prototype._integer = function (input) {
 validator.prototype._alphanumeric = function (input) {
   let value = input.value;
   let pattern = new RegExp(/^[a-zA-Z0-9]+$/);
-  if (!pattern.test(value) && value.trim() !== "") {
+  if (!pattern.test(value) && value.trim() != "") {
     this.setError(input, this.msg.alphanumeric);
   }
 };
@@ -203,5 +208,25 @@ validator.prototype._url = function (input) {
   );
   if (!pattern.test(value) && value.trim() != "") {
     this.setError(input, this.msg.url);
+  }
+};
+
+validator.prototype._passwordComplex = function (input) {
+  let value = input.value;
+  let pattern = new RegExp(
+    /(?=(.*[0-9]))(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:"'<>,./?])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{8,}/
+  );
+  if (!pattern.test(value) && value.trim() != "") {
+    this.setError(input, this.msg.passwordComplex);
+  }
+};
+
+validator.prototype._passwordModerate = function (input) {
+  let value = input.value;
+  let pattern = new RegExp(
+    /(?=(.*[0-9]))((?=.*[A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z]))^.{8,}$/
+  );
+  if (!pattern.test(value) && value.trim() != "") {
+    this.setError(input, this.msg.passwordModerate);
   }
 };
